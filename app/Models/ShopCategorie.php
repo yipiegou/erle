@@ -8,4 +8,8 @@ class ShopCategorie extends Model
 {
     //
     public $fillable = ["name","logo","states"];
+    public function usershop()
+    {
+        return $this->hasMany(Shop::class);
+    }
 }

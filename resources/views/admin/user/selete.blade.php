@@ -1,0 +1,76 @@
+@extends("template.admin.whole")
+@section('title','商家类型')
+@section('content')
+    <table class="table table-bordered">
+        <tr>
+            <th>商铺id</th>
+            <td>{{$user->id}}</td>
+        </tr>
+        <tr>
+            <th>商铺名</th>
+            <td>{{$user->shop_name}}</td>
+        </tr>
+        <tr>
+            <th>店铺分类</th>
+            <td>{{$user->shopcategorie->name}}</td>
+        </tr>
+        <tr>
+            <th>店铺图片</th>
+            <td><img src="{{$user->shop_logo}}"></td>
+        </tr>
+        <tr>
+            <th>是否品牌</th>
+            <td>{{$user->brand===1?'是':'否'}}</td>
+        </tr>
+        <tr>
+            <th>是否准时送达</th>
+            <td>{{$user->on_time===1?'是':'否'}}</td>
+        </tr>
+        <tr>
+            <th>是否蜂鸟配送</th>
+            <td>{{$user->fengniao===1?'是':'否'}}</td>
+        </tr>
+        <tr>
+            <th>是否保标记</th>
+            <td>{{$user->bao===1?'是':'否'}}</td>
+        </tr>
+        <tr>
+            <th>是否票标记</th>
+            <td>{{$user->piao===1?'是':'否'}}</td>
+        </tr>
+        <tr>
+            <th>是否准标记</th>
+            <td>{{$user->zhun===1?'是':'否'}}</td>
+        </tr>
+        <tr>
+            <th>起送金额</th>
+            <td>{{$user->start_send}}</td>
+        </tr>
+        <tr>
+            <th>配送费</th>
+            <td>{{$user->send_cost}}</td>
+        </tr>
+        <tr>
+            <th>店公告</th>
+            <td>{{$user->notice}}</td>
+        </tr>
+        <tr>
+            <th>优惠信息</th>
+            <td>{{$user->discount}}</td>
+        </tr>
+        <tr>
+            <th>状态</th>
+            <td>{{$user->status===0?'禁用':'启用'}}</td>
+        </tr>
+        <tr>
+            <th>状态修改</th>
+            <td>
+                <form action="" method="post">
+                    {{csrf_field()}}
+                    <input type="hidden" name="status" value="{{$user->status===0?'1':'0'}}">
+                    <input type="submit" value="{{$user->status===0?'启用':'禁用'}}">
+                </form>
+            </td>
+        </tr>
+    </table>
+@endsection

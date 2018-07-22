@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\ShopCategorie;
+use App\Models\Admin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 
-class ShopCategoryController extends BaseController
+class AdminController extends BaseController
 {
     /**
      * 首页
@@ -15,9 +16,18 @@ class ShopCategoryController extends BaseController
     public function index()
     {
         //获取数据
-        $categs = ShopCategorie::all();
+        $admin = Admin::all();
         //显示视图 传递数据
-        return view('admin.shopcate.index',compact('categs'));
+        return view('admin.admin.index',compact('admin'));
+    }
+    public function login(Request $request){
+        if ($request->isMethod('post')) {
+            if (Auth::guard('admin')->attempt(['name'=>$request->post('name'),'password'=>$request->post('password')],$request->has('remember'))) {
+
+                return redirect()->route('admin.index');
+            }
+        }
+        return view('admin.admin.login');
     }
 
     /**
@@ -30,18 +40,18 @@ class ShopCategoryController extends BaseController
         if ($request->isMethod('post')) {
             $this->validate($request,[
                 'name'=>'required',
-                'logo'=>'required',
+                'email'=>'required',
+                'password'=>'required',
             ]);
             $data = $request->all();
-            if($request->file('logo')){
-                $logo = $request->file('logo')->store("books");
-                $data['logo'] = '/storage/'.$logo;
-            }
-            ShopCategorie::create($data);
-            return redirect()->route('shopcate.index');
+            $data['password'] = bcrypt($data['password']);
+            Admin::create($data);
+
+
+            return redirect()->route('admin.index');
         }
         //显示视图
-        return view('admin.shopcate.add');
+        return view('admin.admin.add');
     }
 
     /**
@@ -51,21 +61,20 @@ class ShopCategoryController extends BaseController
      */
     public function edit(Request $request,$id)
     {
-        $shop = ShopCategorie::find($id);
+        $admin = Admin::findOrfail($id);
+        // dd($shop);
         if ($request->isMethod('post')) {
             $this->validate($request,[
                 'name'=>'required',
-                'logo'=>'required',
+                'email'=>'required',
+                'password'=>'required',
             ]);
             $data = $request->all();
-            if($request->file('logo')){
-                $logo = $request->file('logo')->store("books");
-                $data['logo'] = '/storage/'.$logo;
-            }
-            $shop->update($data);
-            return redirect()->route('shopcate.index');
+            $data['password'] = bcrypt($data['password']);
+            $admin->update($data);
+            return redirect()->route('admin.admin.index');
         }
-        return view('admin.shopcate.edit',compact('shop'));
+        return view('admin.admin.edit',compact('admin'));
     }
 
     /**
@@ -76,9 +85,8 @@ class ShopCategoryController extends BaseController
      */
     public function del(Request $request,$id)
     {
-        $shop=ShopCategorie::findOrfail($id);
-        File::delete($shop->logo);
-        $shop->delete();
-        return redirect()->route('shopcate.index');
+        $admin=Admin::findOrfail($id);
+        $admin->delete();
+        return redirect()->route('admin.index');
     }
 }
