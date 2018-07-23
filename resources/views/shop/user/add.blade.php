@@ -1,4 +1,4 @@
-@extends("template.admin.whole")
+@extends("template.shop.whole")
 @section('title','商家类型添加')
 @section('content')
     <form action="" method="post" enctype="multipart/form-data">

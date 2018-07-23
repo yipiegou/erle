@@ -19,7 +19,7 @@
 </head>
 <body>
 {{--导航条引入--}}
-@include('template.admin._header')
+@include('template.shop._header')
 @include('template._error')
 @include('template._msg')
 <div class="col-md-offset-1 col-md-10">

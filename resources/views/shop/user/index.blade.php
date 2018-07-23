@@ -1,5 +1,5 @@
-@extends("template.admin.whole")
-@section('title','商家类型')
+@extends("template.shop.whole")
+@section('title','商户首页')
 @section('content')
     <a href="{{route('user.add')}}">添加</a>
     <table class="table table-bordered">
@@ -17,8 +17,8 @@
             <td>{{$user->email}}</td>
             <td>{{$user->status===0?'禁用':'启用'}}</td>
             <td>
-                <a href="{{route("shopcate.edit",$user)}}">编辑</a>
-                <a href="{{route("shopcate.del",$user)}}">删除</a>
+                <a href="{{route("user.edit",$user)}}">编辑</a>
+                <a href="{{route("user.password",$user)}}">修改密码</a>
             </td>
         </tr>
         @endforeach

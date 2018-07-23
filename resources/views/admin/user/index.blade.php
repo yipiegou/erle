@@ -24,6 +24,7 @@
             </td>
             <td>
                 <a href="{{route("admin.user.sel",$user)}}">查看商铺</a>
+                <a href="{{route("admin.user.reset",$user)}}">重置密码</a>
                 <a href="{{route("admin.user.edit",$user)}}">编辑</a>
                 <a href="{{route("admin.user.del",$user)}}">删除</a>
             </td>

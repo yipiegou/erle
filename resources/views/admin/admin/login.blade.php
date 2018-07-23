@@ -1,5 +1,5 @@
 @extends("template.admin.whole")
-@section('title','登录')
+@section('title','管理员登录')
 @section('content')
     <form action="" method="post">
         {{csrf_field()}}

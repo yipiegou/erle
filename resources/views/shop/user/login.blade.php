@@ -1,5 +1,5 @@
-@extends("template.admin.whole")
-@section('title','登录')
+@extends("template.shop.whole")
+@section('title','商户登录')
 @section('content')
     <form action="" method="post">
         {{csrf_field()}}
@@ -17,5 +17,6 @@
             </label>
         </div>
         <button type="submit" class="btn btn-default">Submit</button>
+        <a href="http://shop.erle.com/user/add" class="btu btn-success">注册</a>
     </form>
 @endsection

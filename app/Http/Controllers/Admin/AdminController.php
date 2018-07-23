@@ -89,4 +89,9 @@ class AdminController extends BaseController
         $admin->delete();
         return redirect()->route('admin.index');
     }
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()->route('admin.login');
+    }
 }

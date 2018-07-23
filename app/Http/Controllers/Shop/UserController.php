@@ -22,10 +22,32 @@ class UserController extends BaseController
         //显示视图 传递数据
         return view('shop.user.index',compact('users'));
     }
+    public function editpassword(Request $request,$id){
+        $user=User::find($id);
+        if ($request->isMethod('post')) {
+
+            if(Auth::attempt(["name"=>$request->post('name'),"password"=>$request->post('password')],$request->has('remember'))){
+                $data = $request->all();
+                if($data['password1']!==$data['password2']){
+                    $request->session()->flash("danger","两次密码不一致");
+                    return redirect()->back()->withInput();
+                }
+                $data['password'] = bcrypt($data['password1']);
+                $user->update($data);
+                Auth::logout();
+                $request->session()->flash("success","修改成功，请重新登录");
+                return redirect()->route('user.login');
+            }else {
+                $request->session()->flash("danger", "原密码输入错误");
+                return redirect()->back()->withInput();
+            }
+        }
+        return view('shop.user.password',compact('user'));
+    }
     public function login(Request $request){
         if ($request->isMethod('post')) {
 
-            if(Auth::attempt(["name"=>$request->input('name'),"password"=>$request->input('password')])){
+            if(Auth::attempt(["name"=>$request->post('name'),"password"=>$request->post('password')],$request->has('remember'))){
                 $request->session()->flash("success","登录成功");
                 return redirect()->route('user.index');
             }else {
@@ -119,5 +141,10 @@ class UserController extends BaseController
         File::delete($shop->logo);
         $shop->delete();
         return redirect()->route('user.index');
+    }
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()->route('user.login');
     }
 }

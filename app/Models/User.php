@@ -27,6 +27,6 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
     public function shop(){
-        return $this->belongsTo(Shop::class,'id');
+        return $this->belongsTo(Shop::class);
     }
 }

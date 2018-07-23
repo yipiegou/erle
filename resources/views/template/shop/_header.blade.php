@@ -36,26 +36,26 @@
                 <button type="submit" class="btn btn-default">Submit</button>
             </form>
             <ul class="nav navbar-nav navbar-right">
-                @auth("admin")
-                <li><a href="#">{{\Illuminate\Support\Facades\Auth::guard('admin')->user()->name}}</a></li>
-                <li>
-                    <form action="{{route("admin.logout")}}" method="post">
-                        {{csrf_field()}}
-                        <input type="submit" value="退出">
-                    </form>
-                </li>
-                @endauth
-
-                @guest("admin")
-                        <li class="dropdown">
-                            <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="http://admin.erle.com/">登录</a></li>
-                                <li><a href="#">Something</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#">Separated</a></li>
-                            </ul>
+                    @auth
+                        <li><a href="#">{{\Illuminate\Support\Facades\Auth::user()->name}}</a></li>
+                        <li>
+                            <form action="{{route("user.logout")}}" method="post">
+                                {{csrf_field()}}
+                                <input type="submit" value="退出">
+                            </form>
                         </li>
+                    @endauth
+
+                @guest
+                            <li class="dropdown">
+                                <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="http://shop.erle.com/">登录</a></li>
+                                    <li><a href="#">Something</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#">Separated</a></li>
+                                </ul>
+                            </li>
                 @endguest
             </ul>
         </div><!-- /.navbar-collapse -->
