@@ -16,9 +16,12 @@
             <td>{{$user->email}}</td>
             <td>
                 <a href="{{route("admin.edit",$user)}}">编辑</a>
+                @if($user->id!=1)
                 <a href="{{route("admin.del",$user)}}">删除</a>
+                @endif
             </td>
         </tr>
         @endforeach
     </table>
+    {{$admin->links()}}
 @endsection

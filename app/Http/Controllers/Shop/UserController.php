@@ -18,11 +18,15 @@ class UserController extends BaseController
     public function index()
     {
         //获取数据
-        $users = User::all();
+        $users = User::find(Auth::user()->id);
         //显示视图 传递数据
         return view('shop.user.index',compact('users'));
     }
     public function editpassword(Request $request,$id){
+        if(Auth::user()->id!=$id){
+            session()->flash('success','你没有权限这样做');
+            return redirect(url()->previous());
+        }
         $user=User::find($id);
         if ($request->isMethod('post')) {
 
@@ -105,6 +109,10 @@ class UserController extends BaseController
      */
     public function edit(Request $request,$id)
     {
+        if(Auth::user()->id!=$id){
+            session()->flash('success','你没有权限这样做');
+            return redirect(url()->previous());
+        }
         $shop = User::find($id);
         if ($request->isMethod('post')) {
             $this->validate($request,[
@@ -137,6 +145,10 @@ class UserController extends BaseController
      */
     public function del(Request $request,$id)
     {
+        if(Auth::user()->id!=$id){
+            session()->flash('success','你没有权限这样做');
+            return redirect(url()->previous());
+        }
         $shop=User::findOrfail($id);
         File::delete($shop->logo);
         $shop->delete();

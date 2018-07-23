@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Shop;
 use App\Models\ShopCategorie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -15,7 +16,7 @@ class ShopCategoryController extends BaseController
     public function index()
     {
         //获取数据
-        $categs = ShopCategorie::all();
+        $categs = ShopCategorie::paginate(4);
         //显示视图 传递数据
         return view('admin.shopcate.index',compact('categs'));
     }
@@ -34,7 +35,7 @@ class ShopCategoryController extends BaseController
             ]);
             $data = $request->all();
             if($request->file('logo')){
-                $logo = $request->file('logo')->store("books");
+                $logo = $request->file('logo')->store("public/books");
                 $data['logo'] = '/storage/'.$logo;
             }
             ShopCategorie::create($data);
@@ -77,6 +78,10 @@ class ShopCategoryController extends BaseController
     public function del(Request $request,$id)
     {
         $shop=ShopCategorie::findOrfail($id);
+        $unm = Shop::where('shop_category_id','=',$shop->id)->count();
+        if($unm){
+            return back()->withErrors(['该类下面还存在商铺不能删除']);
+        }
         File::delete($shop->logo);
         $shop->delete();
         return redirect()->route('shopcate.index');

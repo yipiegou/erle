@@ -1,5 +1,5 @@
 @extends("template.shop.whole")
-@section('title','商家类型添加')
+@section('title','注册')
 @section('content')
     <form action="" method="post" enctype="multipart/form-data">
         {{ csrf_field() }}

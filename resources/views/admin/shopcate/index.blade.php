@@ -23,4 +23,5 @@
         </tr>
         @endforeach
     </table>
+    {{$categs->links()}}
 @endsection

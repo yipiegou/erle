@@ -16,19 +16,19 @@
             <td>{{$user->name}}</td>
             <td>{{$user->email}}</td>
             <td>
-                <form action="{{route('admin.user.edit',$user)}}" method="post">
-                    {{csrf_field()}}
-                    <input type="hidden" name="status" value="{{$user->status===0?'1':'0'}}">
-                    <input type="submit" value="{{$user->status===0?'启用':'禁用'}}">
-                </form>
+                    {{$user->status===0?'禁用':'启用'}}
             </td>
             <td>
-                <a href="{{route("admin.user.sel",$user)}}">查看商铺</a>
+                @if($user->status===0)
+                    <a href="{{route("admin.user.auditing",$user)}}">审核</a>
+                @endif
+                <a href="{{route("admin.user.selete",$user)}}">查看商铺</a>
                 <a href="{{route("admin.user.reset",$user)}}">重置密码</a>
                 <a href="{{route("admin.user.edit",$user)}}">编辑</a>
-                <a href="{{route("admin.user.del",$user)}}">删除</a>
+                <a href="{{route("admin.user.del",$user)}}" onclick="return confirm('删除商户会把商铺也删除了确认删除吗！')">删除</a>
             </td>
         </tr>
         @endforeach
     </table>
+    {{ $users->links() }}
 @endsection

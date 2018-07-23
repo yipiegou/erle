@@ -27,21 +27,50 @@ Route::domain('admin.erle.com')->namespace('Admin')->group(function () {
     Route::any('admin/del/{id}',"AdminController@del")->name("admin.del");
     Route::any('admin/logout',"AdminController@logout")->name('admin.logout');
     //后台商户管理
-    Route::get('user/index',"UserController@index")->name("admin.user.index");
-    Route::get('user/sel/{id}',"UserController@selete")->name("admin.user.sel");
+    Route::get('user/index/{id}',"UserController@index")->name("admin.user.index");
+    //后台审核商户
+    Route::get('user/auditing/{id}',"UserController@auditing")->name("admin.user.auditing");
+    //查询
+   // Route::get('user/sel/{id}',"UserController@selete")->name("admin.user.sel");
+    //后台添加商户
     Route::any('user/add',"UserController@add")->name("admin.user.add");
-    Route::any('admin.user.reset',"UserController@add")->name("admin.user.reset");
+    Route::any('admin.user.reset',"UserController@reset")->name("admin.user.reset");
+    //查询商户商铺
+    Route::any('admin.user.selete/{id}',"UserController@selete")->name("admin.user.selete");
+    //后台编辑商户
     Route::any('user/edit/{id}',"UserController@edit")->name("admin.user.edit");
+    //后台禁用商户
     Route::any('user/del/{id}',"UserController@del")->name("admin.user.del");
 });
 Route::domain('shop.erle.com')->namespace('Shop')->group(function () {
-    //商户注册
+    //商户首页
     Route::get('user/index',"UserController@index")->name("user.index");
     //登录
     Route::any('user/login',"UserController@login")->name("user.login");
     //修改密码
     Route::any('user/password/{id}',"UserController@editpassword")->name("user.password");
+    //注册
     Route::any('user/add',"UserController@add")->name("user.add");
+    //修改信息
     Route::any('user/edit/{id}',"UserController@edit")->name("user.edit");
+    //退出登录
     Route::any('user/logout',"UserController@logout")->name('user.logout');
+
+    //菜品类首页
+    Route::get('menus/index',"MenuCategoryController@index")->name("menus.index");
+    //菜品类添加
+    Route::any('menus/add',"MenuCategoryController@add")->name("menus.add");
+    //菜品类修改
+    Route::any('menus/edit/{id}',"MenuCategoryController@edit")->name("menus.edit");
+    //菜品类删除
+    Route::any('menus/del/{id}',"MenuCategoryController@edit")->name("menus.del");
+
+    //菜品首页
+    Route::any('menu/index',"MenuController@index")->name("menu.index");
+    //菜品添加
+    Route::any('menu/add',"MenuController@add")->name("menu.add");
+    //菜品修改
+    Route::any('menu/edit/{id}',"MenuController@edit")->name("menu.edit");
+    //菜品类删除
+    Route::any('menu/del/{id}',"MenuCategoryController@edit")->name("menu.del");
 });

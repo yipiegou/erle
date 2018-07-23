@@ -15,21 +15,23 @@ class UserController extends BaseController
      * 首页
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index($id = 1)
     {
         //获取数据
-        $users = User::all();
+        $users = User::where('status','=',$id)->paginate(4);
         //显示视图 传递数据
         return view('admin.user.index',compact('users'));
     }
+    //查看店铺
     public function selete(Request $request,$id)
     {
         //获取数据
         $user = Shop::find($id);
+
         if ($request->isMethod('post')) {
             dd($request->all());
             $user->update($request->all());
-            return redirect()->route('user.index');
+            return redirect()->route('admin.user.index');
         }
         //显示视图 传递数据
         return view('admin.user.selete',compact('user'));
@@ -68,7 +70,7 @@ class UserController extends BaseController
             });
 
 
-            return redirect()->route('user.index');
+            return redirect()->route('admin.user.index',1);
         }
         //类型
         $shop = ShopCategorie::all();
@@ -105,22 +107,46 @@ class UserController extends BaseController
 
             }
             $shop->update($data);
-            return redirect()->route('admin.user.index');
+            return redirect()->route('admin.user.index',1);
         }
         return view('admin.user.edit',compact('shop'));
     }
 
     /**
-     * 删除
+     * 软删除
      * @param Request $request
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
     public function del(Request $request,$id)
     {
-        $shop=User::findOrfail($id);
-        File::delete($shop->logo);
-        $shop->delete();
-        return redirect()->route('user.index');
+        $user=User::findOrFail($id);
+        $shop=Shop::findOrFail($user->shop_id);
+        $user->status = 0;
+        $shop->status = -1;
+        $user->save();
+        $shop->save();
+        return redirect()->route('admin.user.index',1);
+    }
+    //重置密码
+    public function reset($id)
+    {
+        $user = User::findOrFail($id);
+        $passwrod = bcrypt(000000);
+        $user->password = $passwrod;
+        $user->seav();
+        return redirect()->route('admin.user.index',1);
+    }
+    //审核
+    public function auditing($id)
+    {
+        $user=User::findOrFail($id);
+        $shop=Shop::findOrFail($user->shop_id);
+        $user->status = 1;
+        $shop->status = 1;
+        $user->save();
+        $shop->save();
+        session()->flash('success','审核成功');
+        return redirect()->route('admin.user.index',1);
     }
 }

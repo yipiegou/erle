@@ -62,15 +62,5 @@
             <th>状态</th>
             <td>{{$user->status===0?'禁用':'启用'}}</td>
         </tr>
-        <tr>
-            <th>状态修改</th>
-            <td>
-                <form action="" method="post">
-                    {{csrf_field()}}
-                    <input type="hidden" name="status" value="{{$user->status===0?'1':'0'}}">
-                    <input type="submit" value="{{$user->status===0?'启用':'禁用'}}">
-                </form>
-            </td>
-        </tr>
     </table>
 @endsection
