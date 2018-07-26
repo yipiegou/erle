@@ -59,7 +59,7 @@ class UserController extends BaseController
             $data = $request->all();
             if($request->file('shop_logo')){
                 $logo = $request->file('shop_logo')->store("public/usershop");
-                $data['shop_logo'] = '/storage/'.$logo;
+                $data['shop_logo'] = env('ALIYUN_OSS_URL').$logo;
             }
             $data['password'] = bcrypt($data['password']);
             DB::transaction(function () use ($data){
@@ -85,8 +85,9 @@ class UserController extends BaseController
      */
     public function edit(Request $request,$id)
     {
-        $shop = User::find($id);
-       // dd($shop);
+        $user = User::find($id);
+        $shop = Shop::find($user->shop_id);
+       $shops = ShopCategorie::all();
         if ($request->isMethod('post')) {
             $this->validate($request,[
                 'name'=>'required',
@@ -101,15 +102,15 @@ class UserController extends BaseController
             ]);
             $data =$request->all();
             if($request->file('shop_logo')){
-                //File::delete($shop->);
+                //File::delete($shop->);public/
                 $logo = $request->file('shop_logo')->store("usershop");
-                $data['shop_logo'] = '/storage/'.$logo;
-
+                $data['shop_logo'] = env('ALIYUN_OSS_URL').$logo;
+                Storage::delete($shop->shop_logo);
             }
             $shop->update($data);
             return redirect()->route('admin.user.index',1);
         }
-        return view('admin.user.edit',compact('shop'));
+        return view('admin.user.edit',compact('shop','shops','user'));
     }
 
     /**

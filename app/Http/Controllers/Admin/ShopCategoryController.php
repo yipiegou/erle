@@ -6,6 +6,7 @@ use App\Models\Shop;
 use App\Models\ShopCategorie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class ShopCategoryController extends BaseController
 {
@@ -35,8 +36,8 @@ class ShopCategoryController extends BaseController
             ]);
             $data = $request->all();
             if($request->file('logo')){
-                $logo = $request->file('logo')->store("public/books");
-                $data['logo'] = '/storage/'.$logo;
+                $logo = $request->file('logo')->store("books");
+                $data['logo'] = env('ALIYUN_OSS_URL').$logo;
             }
             ShopCategorie::create($data);
             return redirect()->route('shopcate.index');
@@ -61,7 +62,8 @@ class ShopCategoryController extends BaseController
             $data = $request->all();
             if($request->file('logo')){
                 $logo = $request->file('logo')->store("books");
-                $data['logo'] = '/storage/'.$logo;
+                $data['logo'] = env('ALIYUN_OSS_URL').$logo;
+                Storage::delete($shop->logo);
             }
             $shop->update($data);
             return redirect()->route('shopcate.index');
@@ -82,7 +84,7 @@ class ShopCategoryController extends BaseController
         if($unm){
             return back()->withErrors(['该类下面还存在商铺不能删除']);
         }
-        File::delete($shop->logo);
+        Storage::delete($shop->logo);
         $shop->delete();
         return redirect()->route('shopcate.index');
     }

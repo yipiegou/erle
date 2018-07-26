@@ -14,7 +14,7 @@
         <tr>
             <td>{{$categ->id}}</td>
             <td>{{$categ->name}}</td>
-            <td><img src="{{$categ->logo}}" ></td>
+            <td><img src="{{$categ->logo}}?x-oss-process=image/resize,w_30,h_30" ></td>
             <td>{{$categ->states}}</td>
             <td>
                 <a href="{{route("shopcate.edit",$categ)}}">编辑</a>

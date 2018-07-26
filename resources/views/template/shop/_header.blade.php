@@ -14,7 +14,12 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">最新活动<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{route('shop.activity.index')}}">活动首页</a></li>
+                    </ul>
+                </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">菜品管理<span class="caret"></span></a>
                     <ul class="dropdown-menu">
@@ -61,7 +66,7 @@
                             <li class="dropdown">
                                 <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="http://shop.erle.com/">登录</a></li>
+                                    <li><a href="http://shop.erle.com/user/login">登录</a></li>
                                     <li><a href="#">Something</a></li>
                                     <li role="separator" class="divider"></li>
                                     <li><a href="#">Separated</a></li>

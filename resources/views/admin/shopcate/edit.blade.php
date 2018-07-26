@@ -21,7 +21,7 @@
             <label for="exampleInputFile">图片</label>
             <input type="file" id="exampleInputFile" name="logo">
         </div>
-        <img src="{{$shop->logo}}" class="">
+        <img src="{{$shop->logo}}"><br/>
         <button type="submit" class="btn btn-success">提交</button>
     </form>
 @endsection

@@ -15,6 +15,13 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li class="dropdown">
+                    <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">活动管理<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{route('activity.index')}}">活动首页</a></li>
+                        <li><a href="{{route('activity.add')}}">活动添加</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
                     <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">商铺类管理<span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="{{route('shopcate.index')}}">商铺类首页</a></li>

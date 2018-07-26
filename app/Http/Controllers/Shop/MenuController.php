@@ -18,8 +18,8 @@ class MenuController extends BaseController
         $min = 0;
         $man = 100000000000000;
         $data = $request->all();
-        if(isset($data['name'])){
-            $vale = $data['name'];
+        if(isset($data['goods_name'])){
+            $vale = $data['goods_name'];
         }
         if(isset($data['min'])){
             $min = $data['min'];
@@ -51,18 +51,20 @@ class MenuController extends BaseController
                 'goods_price'=>'required',
                 'tips'=>'required',
                 'is_selected'=>'required',
+                'logo'=>'required',
             ]);
             $data = $request->all();
+            //dd($_FILES);
+            //dd($request->file('goods_img'));
             if($request->file('goods_img')){
-                $logo = $request->file('goods_img')->store("public/menu");
+                $logo = $request->file('goods_img')->store("menu");
                 //dd($logo);
-                $data['goods_img'] = '/storage/'.$logo;
+                $data['goods_img'] = env('ALIYUN_OSS_URL').$logo;
             }
-            //dd($data);
+            dd($data);
             $data['shop_id'] = Auth::user()->shop_id;
             Menu::create($data);
-            session()->flash('success','添加成功');
-            return redirect()->route('menu.index');
+            return redirect()->route('menu.index')->with('success','添加成功');
         }
         return view('shop.menu.add',compact('menuss'));
     }

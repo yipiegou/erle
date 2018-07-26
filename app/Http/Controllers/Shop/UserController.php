@@ -22,6 +22,13 @@ class UserController extends BaseController
         //显示视图 传递数据
         return view('shop.user.index',compact('users'));
     }
+
+    /**
+     * 重置密码
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
+     */
     public function editpassword(Request $request,$id){
         if(Auth::user()->id!=$id){
             session()->flash('success','你没有权限这样做');
@@ -85,7 +92,7 @@ class UserController extends BaseController
             $data = $request->all();
             if($request->file('shop_logo')){
                 $logo = $request->file('shop_logo')->store("usershop");
-                $data['shop_logo'] = '/storage/'.$logo;
+                $data['shop_logo'] = env('ALIYUN_OSS_URL').$logo;
             }
             $data['password'] = bcrypt($data['password']);
             DB::transaction(function () use ($data){
@@ -126,10 +133,15 @@ class UserController extends BaseController
                 'notice'=>'required',
                 'discount'=>'required',
             ]);
-            DB::transaction(function () use ($shop,$request){
-                $shop->update($request->all());
+            $data = $request->all();
+            if($request->file('shop_logo')){
+                $logo = $request->file('shop_logo')->store("usershop");
+                $data['shop_logo'] = env('ALIYUN_OSS_URL').$logo;
+            }
+            DB::transaction(function () use ($shop,$data){
+                $shop->update($data);
                 $shops = Shop::find($shop->id);
-                $shops->update($request->all());
+                $shops->update($data);
                 return redirect()->route('user.index');
             });
             return view('shop.user.edit',compact('shop'));

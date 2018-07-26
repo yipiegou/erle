@@ -34,13 +34,24 @@ Route::domain('admin.erle.com')->namespace('Admin')->group(function () {
    // Route::get('user/sel/{id}',"UserController@selete")->name("admin.user.sel");
     //后台添加商户
     Route::any('user/add',"UserController@add")->name("admin.user.add");
-    Route::any('admin.user.reset',"UserController@reset")->name("admin.user.reset");
+    Route::any('admin/user/reset',"UserController@reset")->name("admin.user.reset");
     //查询商户商铺
-    Route::any('admin.user.selete/{id}',"UserController@selete")->name("admin.user.selete");
+    Route::any('admin/user/selete/{id}',"UserController@selete")->name("admin.user.selete");
     //后台编辑商户
     Route::any('user/edit/{id}',"UserController@edit")->name("admin.user.edit");
     //后台禁用商户
     Route::any('user/del/{id}',"UserController@del")->name("admin.user.del");
+
+    //后台添加活动
+    Route::any('activity/add',"ActivityController@add")->name("activity.add");
+    //活动首页
+    Route::any('activity/index',"ActivityController@index")->name("activity.index");
+    //活动详情查看
+    Route::any('activity/selete/{id}',"ActivityController@selete")->name("activity.selete");
+    //编辑活动
+    Route::any('activity/edit/{id}',"ActivityController@edit")->name("activity.edit");
+    //禁用活动
+    Route::any('activity/del/{id}',"ActivityController@del")->name("activity.del");
 });
 Route::domain('shop.erle.com')->namespace('Shop')->group(function () {
     //商户首页
@@ -73,4 +84,9 @@ Route::domain('shop.erle.com')->namespace('Shop')->group(function () {
     Route::any('menu/edit/{id}',"MenuController@edit")->name("menu.edit");
     //菜品类删除
     Route::any('menu/del/{id}',"MenuCategoryController@edit")->name("menu.del");
+
+    //活动首页
+    Route::any('activity/index',"ActivityController@index")->name("shop.activity.index");
+    //活动详情查看
+    Route::any('activity/edit/{id}',"ActivityController@edit")->name("shop.activity.edit");
 });
