@@ -27,7 +27,7 @@
             <label for="exampleInputFile">店铺图片</label>
             <input type="file" id="exampleInputFile" name="shop_logo">
         </div>
-        <img src="{{$shop->shop_logo}}" >
+        <img src="{{$shop->shop_img}}" >
         <div class="form-group">
             <label>是否品牌</label>
             <label>

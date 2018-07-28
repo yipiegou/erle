@@ -8,6 +8,7 @@ use App\Models\Shop;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Mrgoon\AliSms\AliSms;
 
 class UserController extends BaseController
 {
@@ -75,8 +76,6 @@ class UserController extends BaseController
      */
     public function add(Request $request)
     {
-        //类型
-        $shop = ShopCategorie::all();
         if ($request->isMethod('post')) {
             $this->validate($request,[
                 'name'=>'required',
@@ -92,7 +91,7 @@ class UserController extends BaseController
             $data = $request->all();
             if($request->file('shop_logo')){
                 $logo = $request->file('shop_logo')->store("usershop");
-                $data['shop_logo'] = env('ALIYUN_OSS_URL').$logo;
+                $data['shop_img'] = env('ALIYUN_OSS_URL').$logo;
             }
             $data['password'] = bcrypt($data['password']);
             DB::transaction(function () use ($data){
@@ -101,6 +100,10 @@ class UserController extends BaseController
                 User::create($data);
                 return redirect()->route('user.index');
             });
+            $aliSms = new AliSms();
+            $response = $aliSms->sendSms('1813465800', 'SMS_140695123', ['code'=> 'value in your template']);
+            //类型
+            $shop = ShopCategorie::all();
             //显示视图
             return view('shop.user.add',compact('shop'));
         }
@@ -120,7 +123,8 @@ class UserController extends BaseController
             session()->flash('success','你没有权限这样做');
             return redirect(url()->previous());
         }
-        $shop = User::find($id);
+        $user = User::findOrfail($id);
+        $shop = User::findOrfail($user->shop_id);
         if ($request->isMethod('post')) {
             $this->validate($request,[
                 'name'=>'required',
@@ -136,7 +140,7 @@ class UserController extends BaseController
             $data = $request->all();
             if($request->file('shop_logo')){
                 $logo = $request->file('shop_logo')->store("usershop");
-                $data['shop_logo'] = env('ALIYUN_OSS_URL').$logo;
+                $data['shop_img'] = env('ALIYUN_OSS_URL').$logo;
             }
             DB::transaction(function () use ($shop,$data){
                 $shop->update($data);
@@ -146,7 +150,7 @@ class UserController extends BaseController
             });
             return view('shop.user.edit',compact('shop'));
         }
-        return view('shop.user.edit',compact('shop'));
+        return view('shop.user.edit',compact('shop','user'));
     }
 
     /**
@@ -161,9 +165,11 @@ class UserController extends BaseController
             session()->flash('success','你没有权限这样做');
             return redirect(url()->previous());
         }
-        $shop=User::findOrfail($id);
-        File::delete($shop->logo);
+        $user=User::findOrfail($id);
+        $shop=Shop::findOrfail($user->shop_id);
+        File::delete($shop->shop_img);
         $shop->delete();
+        $user->delete();
         return redirect()->route('user.index');
     }
     public function logout()
