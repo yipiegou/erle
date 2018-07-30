@@ -10,7 +10,11 @@ class MenuCategory extends Model
     public $fillable = ['name','type_accumulation','shop_id','description','is_selected'];
 
     //和菜品发生关系
-    public function menu(){
+//    public function menu(){
+//        return $this->hasMany(Menu::class,'category_id');
+//    }
+//和菜品发生关系
+    public function goodslist(){
         return $this->hasMany(Menu::class,'category_id');
     }
     //和商铺发生关系

@@ -62,3 +62,28 @@
 安装POSTMAN调试
 ### 完成状况
 100%
+## 第六天
+### 需求
+接口开发
+
+接口开发
+
+用户注册
+用户登录
+发送短信 要求
+创建会员表
+短信验证码发送成功后,保存到redis,并设置有效期5分钟
+用户注册时,从redis取出验证码进行验证
+获取指定商家接口
+### 实现步骤
+在routes/api.php写API接口
+在public/api.js 配置相关路由
+参考之前接口文件获取数据
+短信的发送
+https://packagist.org/packages/mrgoon/aliyun-sms
+把验证码存储在redis数据库里面
+然后和用户输入的对比
+书写API接口文档 https://www.showdoc.cc/web/?#/item/index
+
+### 完成状况
+100%

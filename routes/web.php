@@ -81,9 +81,9 @@ Route::domain('shop.erle.com')->namespace('Shop')->group(function () {
     //菜品添加
     Route::any('menu/add',"MenuController@add")->name("menu.add");
     //菜品修改
-    Route::any('menu/edit/{id}',"MenuController@edit")->name("menu.edit");
+    Route::any('menu/edit/{goods_id}',"MenuController@edit")->name("menu.edit");
     //菜品类删除
-    Route::any('menu/del/{id}',"MenuCategoryController@edit")->name("menu.del");
+    Route::any('menu/del/{goods_id}',"MenuCategoryController@edit")->name("menu.del");
 
     //活动首页
     Route::any('activity/index',"ActivityController@index")->name("shop.activity.index");

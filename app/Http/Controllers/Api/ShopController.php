@@ -24,10 +24,10 @@ class ShopController extends BaseController
         $shop = Shop::findOrFail($id);
             $shop->distance= 637;
             $shop->estimate_time= 30;
-            $shop->commodity = MenuCategory::where('shop_id',$id)->get();
-            foreach ($shop->commodity as $c):
-                $c->goods_list = Menu::where('category_id',$c->id)->get();
-            endforeach;
+            $shop->commodity = MenuCategory::with('goodslist')->where('shop_id',$id)->get();
+//            foreach ($shop->commodity as $c):
+//                $c->goods_list = Menu::where('category_id',$c->id)->get();
+//            endforeach;
         return $shop;
     }
 }
