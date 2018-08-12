@@ -14,7 +14,7 @@ class MenuCategory extends Model
 //        return $this->hasMany(Menu::class,'category_id');
 //    }
 //和菜品发生关系
-    public function goodslist(){
+    public function goods_list(){
         return $this->hasMany(Menu::class,'category_id');
     }
     //和商铺发生关系

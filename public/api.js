@@ -1,36 +1,42 @@
 window.api = {
   // 登录验证接口
-  loginCheck: 'api/member/login',
+  loginCheck: '/api/member/login',
   // 获取短信验证码接口
-  sms: 'api/member/sms',
+  sms: '/api/member/sms',
   // 注册接口
-  regist: 'api/member/reg',
+  regist: '/api/member/reg',
   // 修改密码接口
-  changePassword: 'api/member/changePassword',
+  changePassword: '/api/member/changePassword',
   // 忘记密码接口
-  forgetPassword: 'api/member/forgetPassword',
+  forgetPassword: '/api/member/forgetPassword',
   // 地址列表接口
-  addressList: '/addressList.php',
+  addressList: '/api/addrey/addresslist',
   // 指定地址接口
-  address: '/address.php',
+  address: '/api/addrey/address',
   // 保存新增地址接口
-  addAddress: '/addAddress.php',
+  addAddress: '/api/addrey/addaddress',
   // 保存修改地址接口
-  editAddress: '/editAddress.php',
+  editAddress: '/api/addrey/editAddress',
   // 获得订单列表接口
-  orderList: '/orderList.php',
+  orderList: '/api/order/orderList',
   // 获得指定订单接口
-  order: '/order.php',
+  order: '/api/order/order',
   // 获得商家列表接口
-  businessList: 'api/shop/list',
+  businessList: '/api/shop/list',
   // 获得指定商家接口
-  business: 'api/shop/selete',
+  business: '/api/shop/selete',
   // 保存购物车接口
-  addCart: '/addCart.php',
+  addCart: '/api/cart/addCart',
   // 获取购物车数据接口
-  cart: '/cart.php',
+  cart: '/api/cart/cart',
   // 添加订单接口
-  addOrder: '/addorder.php',
+  addOrder: '/api/order/addorder',
   // 支付接口
-  pay: '/pay.php'
+  pay: '/api/order/pay',
+  // 用户详情接口
+  userDetail: '/api/member/detail',
+    // 微信支付
+    wxPay: '/api/order/wxPay',
+    // 订单状态
+    wxStatus: '/api/order/status'
 };

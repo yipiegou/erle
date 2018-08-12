@@ -65,7 +65,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'PRC',
 
     /*
     |--------------------------------------------------------------------------
@@ -177,9 +177,18 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         /**
+         * 编辑器
+         */
+        Overtrue\LaravelUEditor\UEditorServiceProvider::class,
+        /**
          * 短信
          */
-        Mrgoon\AliSms\ServiceProvider::class
+        Mrgoon\AliSms\ServiceProvider::class,
+        /**
+         * 中文搜索
+         */
+        Laravel\Scout\ScoutServiceProvider::class,
+        Vanry\Scout\TNTSearchScoutServiceProvider::class,
     ],
 
     /*

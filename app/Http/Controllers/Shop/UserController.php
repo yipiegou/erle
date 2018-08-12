@@ -124,7 +124,8 @@ class UserController extends BaseController
             return redirect(url()->previous());
         }
         $user = User::findOrfail($id);
-        $shop = User::findOrfail($user->shop_id);
+        $shop = Shop::findOrfail($user->shop_id);
+        $shops = ShopCategorie::all();
         if ($request->isMethod('post')) {
             $this->validate($request,[
                 'name'=>'required',
@@ -150,7 +151,7 @@ class UserController extends BaseController
             });
             return view('shop.user.edit',compact('shop'));
         }
-        return view('shop.user.edit',compact('shop','user'));
+        return view('shop.user.edit',compact('shop','user','shops'));
     }
 
     /**

@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Mail\OrderShipped;
 use App\Models\ShopCategorie;
 use App\Models\User;
 use App\Models\Shop;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends BaseController
 {
@@ -15,10 +17,10 @@ class UserController extends BaseController
      * 首页
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index($id = 1)
+    public function index()
     {
         //获取数据
-        $users = User::where('status','=',$id)->paginate(4);
+        $users = User::paginate(4);
         //显示视图 传递数据
         return view('admin.user.index',compact('users'));
     }
@@ -70,7 +72,7 @@ class UserController extends BaseController
             });
 
 
-            return redirect()->route('admin.user.index',1);
+            return redirect()->route('admin.user.index');
         }
         //类型
         $shop = ShopCategorie::all();
@@ -108,7 +110,7 @@ class UserController extends BaseController
                 Storage::delete($shop->shop_logo);
             }
             $shop->update($data);
-            return redirect()->route('admin.user.index',1);
+            return redirect()->route('admin.user.index');
         }
         return view('admin.user.edit',compact('shop','shops','user'));
     }
@@ -127,7 +129,7 @@ class UserController extends BaseController
         $shop->status = -1;
         $user->save();
         $shop->save();
-        return redirect()->route('admin.user.index',1);
+        return redirect()->route('admin.user.index');
     }
     //重置密码
     public function reset($id)
@@ -135,8 +137,9 @@ class UserController extends BaseController
         $user = User::findOrFail($id);
         $passwrod = bcrypt(000000);
         $user->password = $passwrod;
-        $user->seav();
-        return redirect()->route('admin.user.index',1);
+        $user->save();
+        session()->flash('success','重置成功 000000');
+        return redirect(url()->previous());
     }
     //审核
     public function auditing($id)
@@ -147,7 +150,9 @@ class UserController extends BaseController
         $shop->status = 1;
         $user->save();
         $shop->save();
+        $order =\App\Models\Order::find($id);
+        Mail::to($user)->send(new OrderShipped($order));
         session()->flash('success','审核成功');
-        return redirect()->route('admin.user.index',1);
+        return redirect()->route('admin.user.index');
     }
 }

@@ -7,8 +7,8 @@
             <td>{{$activity->title}}</td>
         </tr>
         <tr>
-            <th>标题</th>
-            <td>{{$activity->content}}</td>
+            <th>内容</th>
+            <td>{!! $activity->content !!}</td>
         </tr>
         <tr>
             <th>开始时间</th>

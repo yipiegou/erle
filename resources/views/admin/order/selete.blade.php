@@ -1,0 +1,52 @@
+@extends("template.shop.whole")
+@section('title','订单详情')
+@section('content')
+    <table class="table table-bordered">
+        <tr>
+            <th>id</th>
+            <td>{{$order->id}}</td>
+        </tr>
+        <tr>
+            <th>订单号</th>
+            <td>{{$order->order_code}}</td>
+        </tr>
+        <tr>
+            <th>收货人</th>
+            <td>{{$order->name}}</td>
+        </tr>
+        <tr>
+            <th>联系电话</th>
+            <td>{{$order->tel}}</td>
+        </tr>
+        <tr>
+            <th>状态</th>
+            <td>{{$order->status}}</td>
+        </tr>
+        <tr>
+            <th>地址</th>
+            <td>{{$order->provence.$order->city.$order->area.$order->order_address}}</td>
+        </tr>
+        <tr>
+            <th>价格</th>
+            <td>{{$order->order_price}}</td>
+        </tr>
+        <tr>
+            <th>时间</th>
+            <td>{{$order->created_at}}</td>
+        </tr>
+        @foreach($order->orderSelete as $orde)
+        <tr>
+            <th>商品名</th>
+            <td>{{$orde->goods_name}}</td>
+        </tr>
+        <tr>
+             <th>商品数量</th>
+             <td>{{$orde->amount}}</td>
+        </tr>
+        <tr>
+            <th>商品单价</th>
+            <td>{{$orde->goods_price}}</td>
+        </tr>
+        @endforeach
+    </table>
+@endsection

@@ -16,6 +16,13 @@
             <input type="password" class="form-control" id="exampleInputpassword1" placeholder="密码" name="password">
         </div>
         </select>
+        <label for="exampleInputEmail1">权限</label><br/>
+        @foreach($role as $p)
+            <label class="checkbox-inline">
+                <input type="checkbox" id="inlineCheckbox1" name="role[]" value="{{$p->name}}" @if(!$admin->hasPermissionTo($p->id)) checked @endif>{{$p->name}}
+            </label><br/>
+            @endforeach
+            </select>
         <button type="submit" class="btn btn-success">提交</button>
     </form>
 @endsection

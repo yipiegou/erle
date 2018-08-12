@@ -4,13 +4,12 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Member;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Validator;
 use Mrgoon\AliSms\AliSms;
 
-class MemberController extends Controller
+class MemberController extends BaseController
 {
     /**
      * 注册
@@ -227,5 +226,9 @@ class MemberController extends Controller
             "status"=> "true",
             "message"=> "重置密码成功"
         ];
+    }
+    public function detail(){
+//        return \request()->all();
+        return Member::where('id',\request()->all()['user_id'])->first();
     }
 }

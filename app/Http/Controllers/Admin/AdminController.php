@@ -6,6 +6,7 @@ use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Spatie\Permission\Models\Role;
 
 class AdminController extends BaseController
 {
@@ -45,13 +46,16 @@ class AdminController extends BaseController
             ]);
             $data = $request->all();
             $data['password'] = bcrypt($data['password']);
-            Admin::create($data);
-
+            $admin = Admin::create($data);
+            //dd($request->post('role'));
+            $admin->syncRoles($request->post('role'));
 
             return redirect()->route('admin.index');
         }
+        //用户组
+        $role = Role::all();
         //显示视图
-        return view('admin.admin.add');
+        return view('admin.admin.add',compact('role'));
     }
 
     /**
@@ -72,9 +76,13 @@ class AdminController extends BaseController
             $data = $request->all();
             $data['password'] = bcrypt($data['password']);
             $admin->update($data);
-            return redirect()->route('admin.admin.index');
+            $admin->syncRoles($request->post('role'));
+            return redirect()->route('admin.index');
         }
-        return view('admin.admin.edit',compact('admin'));
+        //用户组
+        $role = Role::all();
+        //显示视图
+        return view('admin.admin.edit',compact('admin','role'));
     }
 
     /**

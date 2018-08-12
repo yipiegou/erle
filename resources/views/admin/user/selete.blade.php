@@ -16,7 +16,7 @@
         </tr>
         <tr>
             <th>店铺图片</th>
-            <td><img src="{{$user->shop_logo}}"></td>
+            <td><img src="{{$user->shop_img}}"></td>
         </tr>
         <tr>
             <th>是否品牌</th>
@@ -60,7 +60,7 @@
         </tr>
         <tr>
             <th>状态</th>
-            <td>{{$user->status===0?'禁用':'启用'}}</td>
+            <td>{{$user->status===1?'启用':'禁用'}}</td>
         </tr>
     </table>
 @endsection
